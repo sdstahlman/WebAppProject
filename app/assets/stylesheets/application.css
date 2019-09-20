@@ -1,0 +1,93 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+    background-color: #e6e6e6;
+    font-size: 20px;
+}
+
+/* CSS properties for the parent of the title img */
+#index_img {
+    text-align: center; /* aligns the image to the center */
+}
+
+/* Sets the dimmensions of the picture on home index */
+#index_img img {
+    width: 400px; /* Sets the width of title pic to 400px */
+    height: auto; /* Automatically sizes heigth based of of width */
+}
+
+/* Wraps the whole page */
+.wrapper {
+    word-wrap: break-word; /* Removes text overflow */
+    max-width: 960px; /* sets the max width of the page to 960px */
+    margin: auto; /* makes sure ever element is centered */
+}
+
+
+/*removes the unordered list styling from the list of links in the navbar and sets the background color*/
+header ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #e6e6e6;
+}
+
+/*formats the navbar to to be a horizontal list of rectangles, aligns the text to the center, and sets the font size*/
+li a {
+	float: left;
+	display: block;
+	color: black;
+	padding: 29px 22px;
+	text-decoration: none;
+	text-align: center;
+	font-size: 14pt;
+}
+
+/*changes the color of the item in the nav bar that correlates to the open page*/
+li .active {
+	background-color: #d6d6d6;
+	text-decoration: none;
+}
+
+/*Bolds the title in the navbar and increases the fontsize*/
+.title {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+/*changes the color of the item in the nav bar when it is hovered over*/
+li a:hover:not(.active) {
+	background-color: #f6f6f6;
+	text-decoration: none;
+}
+
+/*Adds shadow to navbar*/
+header {
+    border-top: 10px solid black;
+    border-bottom: 10px solid black;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+#signed_in, #balance {
+	position: static;
+	float: right;
+}

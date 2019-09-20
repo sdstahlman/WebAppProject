@@ -1,0 +1,38 @@
+<div class="wrapper">
+    <div id="signed_in"> <% if current_user %>
+                            <strong><%= current_user.name %></strong>
+                         <% end %> </div><br>
+    <div id="balance"> <% if current_user %>
+                           Balance: <strong><%= current_user.balance %></strong>
+                       <% end %> </div><br>
+                       <div id="users"> <% if current_user %>
+                           User Type: <strong><%= current_user.user_type %></strong>
+                       <% end %> </div><br>
+                     
+    <!--Main Logo img file -->
+    <div id="index_img"><%= image_tag ("/assets/mockup/TDS2.png")%></div>
+    <header>
+        <ul>
+            <li> <%= link_to 'Home', {controller: 'home'}, class: "active" %> </li>
+            <li> <%= link_to 'Matches', controller: 'matches' %> </li>
+            <li> <% if current_user %> 
+                    <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                <% else %>
+                    <%= link_to "Sign In", "/auth/google_oauth2", id: "sign_in" %>
+                <% end %> </li>
+        </ul>
+    </header>
+        <p style="text-align:center;"><strong>Welcome to DS Bets. Never stop winning.</strong></p><br>
+    <p>
+        <!-- <%= link_to 'View Matches', controller: 'matches' %> -->
+    </p>
+    <p>
+        Know of a match you want to bet on but don't see it on the Matches page? Contact an admin about it on the 'Contact' page!
+    </p>
+    <p>
+        Trouble deciding who will win a match? Visit our Resources page to learn from the experts!
+    </p>
+    <p>
+        Gambling is addictive! If you find yourself having trouble turning away from using our services, please call or text at 1-800-522-4700, or check out some other services in the 'Help' page.
+    </p>
+</div>

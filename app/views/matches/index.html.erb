@@ -1,0 +1,78 @@
+<!-- wrapper for page -->
+<div class="wrapper">
+    <!-- checks to see if user is signed in, if they are then displays name -->
+    <div id="signed_in"> <% if current_user %>
+                             <strong><%= current_user.name %></strong>
+                         <% end %> </div><br>
+    <!-- checks to see if user is signed in, if they are then displays balance -->
+    <div id="balance">   <% if current_user %>
+                             Balance: <strong><%= current_user.balance %></strong>
+                         <% end %> </div><br>
+    
+    <!-- displays site logo -->      
+    <div id="index_img"><%=image_tag ("/assets/mockup/TDS2.png")%></div>
+    
+    <!-- Site header including navbar -->
+    <header>
+        <ul>
+            <li> <%= link_to 'Home', controller: 'home' %> </li>
+            <li> <%= link_to 'Matches', {controller: 'matches'}, class: "active" %> </li>
+            <!-- Displays sign in or sign out depending on if there is a user signed in or not -->
+            <li> <% if current_user %> 
+                     <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                 <% else %>
+                     <%= link_to "Sign In", "/auth/google_oauth2", id: "sign_in" %>
+                 <% end %> </li>
+        </ul>
+    </header>
+    
+    <!-- wrapper for matches portion of page -->
+    <div id="matches_wrapper">
+        <h1>Matches</h1>
+        <!-- table for the list of matches -->
+        <table id="match_list">
+            <tr>
+                <th>Match</th>
+                <th>Time</th>
+                <th>Action</th>
+            </tr>
+            <!-- loops through each match and displays it in the table -->
+            <% @matches.each do |match| %>
+            <tr>
+                <!-- displays the home match vs the away match -->
+                <td><%= match.home %> vs. <%= match.away %></td>
+                <!-- displays the date and time the match is to be played in the propper format -->
+                <td><%= match.date.strftime("%m/%e/%y") %> at <%= match.time.strftime("%I:%M %p") %></td>
+                <!-- checks to see if there is a user logged in -->
+                <% if current_user %>
+                    <!-- checks to see if the current user is an admin -->
+                    <% if current_user.user_type == "admin" %>
+                        <!-- adds show, edit, and delete functionality for admins -->
+                        <td><%= link_to 'Show', match_path(match) %>
+                            <%= link_to 'Edit', edit_match_path(match) %>
+                            <%= link_to 'Destroy',
+                                                  match_path(match),
+                                                  method: :delete,
+                                                  data: { confirm: 'Are you sure?' } %></td>
+                    <% else %>
+                        <!-- adds show functionality for users -->
+                        <td><%= link_to 'Show', match_path(match) %></td>
+                    <% end %>
+                <% else %>
+                    <!-- adds show functionality for users not logged in -->
+                    <td><%= link_to 'Show', match_path(match) %></td>
+                <% end %>
+            </tr>
+            <% end %>
+        </table>
+        
+        <!-- checkes to see if there is a user logged in -->
+        <% if current_user %>
+            <!-- checks to see if the current user is an admin -->
+            <% if current_user.user_type == "admin" %>
+                <!-- Link to create new match -->
+                <p>Create <%= link_to 'New Match', new_match_path %></p>
+            <% end %>
+        <% end %>
+    </div>
+</div>

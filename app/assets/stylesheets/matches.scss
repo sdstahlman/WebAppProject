@@ -1,0 +1,45 @@
+// Place all the styles related to the Matches controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#matches_wrapper {
+	padding-left: 115px;
+	padding-right: 115px;
+}
+
+/*aligns everything in the last column  center*/
+#match_info {
+	border-collapse: collapse;
+	width: 430px;
+}
+#match_info td:last-child {
+	text-align: center;
+}
+
+/*aligns everything but the last column to the left*/
+#match_info th:not(:last-child) {
+	text-align: left;
+}
+
+/*adds a border to the bottom of each row*/
+#match_info tr {
+	border-bottom: 1px solid black;
+}
+
+#match_list {
+	border-collapse: collapse;
+	width: 730px;
+}
+#match_list td:last-child {
+	text-align: center;
+}
+
+/*aligns everything but the last column to the left*/
+#match_list th:not(:last-child) {
+	text-align: left;
+}
+
+/*adds a border to the bottom of each row*/
+#match_list tr {
+	border-bottom: 1px solid black;
+}

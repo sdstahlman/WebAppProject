@@ -1,0 +1,142 @@
+<!-- wrapper for page -->
+<div class="wrapper">
+
+    <!-- checks to see if user is signed in, if they are then displays name -->
+    <div id="signed_in"> <% if current_user %>
+                            <strong><%= current_user.name %></strong>
+                         <% end %> </div><br>
+                         
+    <!-- checks to see if user is signed in, if they are then displays balance -->
+    <div id="balance">   <% if current_user %>
+                            Balance: <strong><%= current_user.balance %></strong>
+                         <% end %> </div><br>
+                         
+    <!-- displays site logo -->
+    <div id="index_img"><%=image_tag ("/assets/mockup/TDS2.png")%></div>
+    
+    <!-- Site header including navbar -->
+    <header>
+        <ul>
+            <li> <%= link_to 'Home', controller: 'home' %> </li>
+            <li> <%= link_to 'Matches', {controller: 'matches'}%> </li>
+            <!-- Displays sign in or sign out depending on if there is a user signed in or not -->
+            <li> <% if current_user %> 
+                     <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                 <% else %>
+                     <%= link_to "Sign In", "/auth/google_oauth2", id: "sign_in" %>
+                 <% end %> </li>
+        </ul>
+    </header>
+    
+    <h1>Match Info</h1>
+    <p>You are viewing the info for the following <%= @match.league %> game:</p>
+    
+    <!-- table for the match info -->
+    <table id="match_info">
+        <tr>
+            <th></th>
+            <th>Team</th>
+            <th>Odds</th>
+        </tr>
+        <tr>
+            <td>Home</td>
+            <td><%= @match.home %></td>
+            <td><%= @match.home_odds %></td>
+        </tr>
+        <tr>
+            <td>Away</td>
+            <td><%= @match.away %></td>
+            <td><%= @match.away_odds %></td>
+        </tr>
+    </table>
+    
+    <!-- displays what time the match will be played in a formatted way -->
+    <p>The game will be played on <%= @match.date.strftime("%m/%e/%y") %> at <%= @match.time.strftime("%I:%M %p") %> EST</p>
+    
+    <!-- Checks to see if a user is logged in -->
+    <% if current_user %>
+        <h2>Current Bets</h2>
+        
+        <!-- checks to see if any bets have been placed -->
+        <% if @match.user_bets.length == 0 %>
+            <p>You currently have no bets on this match. Add one now!</p>
+        <% else %>
+            <% userBets = 0 %>
+            <% betTotal = 0 %>
+            
+            <!-- loops through all bets on the match and sees if the use has any bets -->
+            <% @match.user_bets.each do |b| %>
+                <!-- adds up the bet total !WILL BE REMOVED! -->
+                <% betTotal += b.bet %>
+                <% if b.name == current_user.name %>
+                    <% userBets = userBets + 1 %>
+                <% end %>
+            <% end %>
+            
+            <!-- checks to see if the user has placed any bets -->
+            <% if userBets > 0 %>
+                <!-- displays a table of all bets the user has placed on the match -->
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Side</th>
+                        <th>Action</th>
+                    </tr>
+                    <!-- loops through all bets on the match that belong to the user and displays them -->
+                    <% @match.user_bets.each do |b| %>
+                            <% if b.name == current_user.name %>
+                                <tr>
+                                    <td><%= b.name %></td>
+                                    <td>$<%= b.bet %></td>
+                                    <td><%= b.side %></td>
+                                    <!-- option to remove a bet once it is placed -->
+                                    <td><%= link_to 'Remove', [b.match, b],
+                                                method: :delete,
+                                                data: { confirm: 'Are you sure?' } %></td>
+                                </tr>
+                            <% end %>
+                    <% end %>
+                </table>
+            
+            <!-- if the user has no bets, displays a message saying so -->
+            <% else %>
+                <p>You currently have no bets on this match. Add one now!</p>
+            <% end %>
+            
+            <!-- displays the total bet amount !WILL BE REMOVED! -->
+            <p>Total amount bet: $<%= betTotal %></p>
+        
+            <h2>Add Bet</h2>
+                <!-- for for creating a bet for the match selected -->
+                <%= form_for([@match, @match.user_bets.build]) do |f| %>
+                    <!-- Automitaclly populates the text field with user name and disables editing -->
+                    <p>
+                        <%= f.label :name %><br>
+                        <%= f.text_field :name, :value => current_user.name, :readonly => true %>
+                    </p>
+                    <!-- field for placing a bet and validates that the number isn't more than the user has -->
+                    <p>
+                        <%= f.label :bet %><br>
+                        <%= f.number_field :bet, { min: 5, max: current_user.balance}  %>
+                    </p>
+                    <!-- field for selecting a side -->
+                    <p>
+                        <%= f.label :side %><br>
+                        <%= f.text_field :side, required: true %>
+                    </p>
+                    <!-- submits the form -->
+                    <p>
+                        <%= f.submit %>
+                    </p>
+                <% end %>
+        <% end %>
+        
+    <!-- if use isn't logged in, message displays telling them that they need to log in to place a bet -->
+    <% else %>
+        <p>Please sign in to place a bet</p>
+    <% end %>
+    
+    <!-- link back to matches list -->
+    <%= link_to 'Matches List', matches_path %>
+</div>
