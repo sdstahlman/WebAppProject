@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a project from a UNC Charlotte class on Software Development.
 
-Things you may want to cover:
+The Web Application was made using the Ruby on Rails framework.
 
-* Ruby version
 
-* System dependencies
 
-* Configuration
+Team Lead: Alex
+Contributers: Scott, Connor, and Zach
 
-* Database creation
 
-* Database initialization
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+Enter a new era of sports betting! This exciting new website allows you to bet on various matches for your favorite sport!
+Now with Google sign in! Feel safe and secure with our software overlords!
 
-* Deployment instructions
-
-* ...
+If you would like to create a bet listing, please contact an admin.
